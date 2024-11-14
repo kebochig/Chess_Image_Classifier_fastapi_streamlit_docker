@@ -1,0 +1,28 @@
+# docker-compose.yml
+
+version: "3.8"
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi_container
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    restart: always
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    container_name: streamlit_container
+    ports:
+      - "8501:8501"
+    depends_on:
+      - fastapi
+    volumes:
+      - .:/app
+    restart: always
